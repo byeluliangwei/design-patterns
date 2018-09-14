@@ -2,6 +2,7 @@ package cn.luliangwei.patterns.observe;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -22,9 +23,6 @@ public class Test {
 
     public static void main(String[] args) {
         
-        String s = "aaacccxxAAABBCCC";
-        
-        System.out.println(charCount(s));
         Publisher publisher = new Publisher();
         
         ConcreteObserver1 ob1 = new ConcreteObserver1("zhangsan");
@@ -52,9 +50,12 @@ public class Test {
     //                                                  分割线
     //=====================================================================================================
     
-    
+    /**
+     * [0-26)存a-z
+     * [26-52)存A-Z
+     */
     public static Map<String, Integer> charCount(String str){
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new LinkedHashMap<>();
         int[] chars = new int[52];
         for(char ch : str.toCharArray()) {
             if(ch >= 97 && ch <= 122) {
@@ -69,7 +70,7 @@ public class Test {
             if(i>=0 && i <26 && chars[i] != 0) {
                 map.put(String.valueOf((char)(i + 97)), chars[i]);
             }else if(i>=26 && i <52 && chars[i] != 0){
-                map.put(String.valueOf((char)(i + 65)), chars[i]);
+                map.put(String.valueOf((char)(i + 65 - 26)), chars[i]);
             }
         }
         return map;
